@@ -1,22 +1,22 @@
 
-vetor=[4,3,2,1]
-trocou = 1
+vetor=[4,3,2,1] #vetor
+trocou = 1 #variavel para verificar se ocorreu a troca
 
-aux=[]
-print(vetor)
-tam=len(vetor)
-while trocou==1:
-    trocou=0
+aux=[] #vetor auxiliar
+print(vetor)#printa o primeiro vetor
+tam=len(vetor)#verifica o tamanho do vetor
+
+while trocou==1:#enquando houver trocas realiza as verificações
+    trocou=0 #false para iniciar
     
-    i=0
-    while i != (tam-1):
+    i=0 #variavel auxiliar para realizar as voltas
+    while i != (tam-1): #se o valor do vetor i for diferente do tamanho-1,realiza as verificações
        
-        if vetor[i]> vetor[i+1]:
+        if vetor[i]> vetor[i+1]: #caso o valor do vetor na posição i seja maior que na posição i+1 realiza a troca
             aux=vetor[i]
             vetor[i]=vetor[i+1]
             vetor[i+1]=aux
             print(vetor)
-            trocou =1
+            trocou =1 #ocorreu uma troca então verdadeiro
             
-        i=i+1
-       
+        i=i+1#somao contador para ir a proxima casa do vetor
