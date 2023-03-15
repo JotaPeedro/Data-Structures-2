@@ -1,0 +1,32 @@
+#vetor=[29,13 ,-44,20,35,-33,46,-8,15,-30,-29,-16,-35,12,-7]
+
+vetor=[29,13 ,-44]
+
+menor=0
+
+tam=len(vetor)
+i=0
+j=0
+#print(tam)
+#print(vetor)
+
+    
+     
+while i !=(tam-1):
+    while j !=(tam-1):
+        if vetor[j]>vetor[j+1]:
+            menor=vetor[j+1]
+        if vetor[j+1]>vetor[j]: 
+            menor=vetor[j]
+                    
+        j=j+1
+    print("aa",menor)
+    if menor != vetor[i]:
+        aux=vetor[i]
+        vetor[i]=menor
+        vetor[i]=aux
+        
+    i=i+1
+    print(vetor)
+
+
