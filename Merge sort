@@ -1,0 +1,6 @@
+def merge(vetor,inicio,meio,fim)
+    vaux=[]
+    p1=inicio
+    p2=meio+1
+    while(meio>=p1 and fim>=p2):
+        
