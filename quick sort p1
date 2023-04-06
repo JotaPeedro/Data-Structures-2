@@ -1,0 +1,55 @@
+import random
+
+def Quicksort(vetor,inicio,fim,choice,option):
+    
+    if(inicio<fim):
+        pivo=particiona(vetor,inicio,fim,choice,option)
+        Quicksort(vetor,inicio,pivo-1,choice,option)
+        Quicksort(vetor,pivo+1,fim,choice,option)
+     
+    
+def particiona(vetor,inicio,fim,choice,option):
+    
+    esq=inicio
+    dir=fim
+    
+    if(choice=="first"):
+        pivo=vetor[inicio]
+    if(choice=="last"):
+        pivo=vetor[fim]
+    if(choice=="random"):
+            
+        aleatorio=random.randrange(inicio,fim)
+        pivo=vetor[aleatorio]
+        print(pivo)
+    
+    while(esq<dir):
+        
+        while(vetor[esq]<=pivo and esq<fim):
+            esq=esq+1
+        while(vetor[dir]>pivo and dir>=inicio):
+           
+            dir=dir-1
+        if (esq<dir):
+            vetor[esq],vetor[dir] = vetor[dir],vetor[esq]
+            troca=troca=+1
+            
+    
+    vetor[dir],vetor[inicio] = vetor[inicio],vetor[dir]
+    troca=troca=+1
+    
+    return(dir)
+   
+
+
+
+
+vetor=[29,13,-44,20,35,-33,46,-8,15,-30,-29,-16,-35,12,-7] #vetor
+#vetor=[7,9,3,1]
+
+Quicksort(vetor,0,14,"random","sm")
+print(vetor)
+
+
+
+
