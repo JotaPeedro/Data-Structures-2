@@ -162,24 +162,28 @@ def Ler_Op(arquivo2, arquivo3):
 
                 for vetor in vetor:
                     l = l+1
+                    
                     if chavedelete in vetor:
-                        remover(l, "arquivo1.txt")
+                        remover(l, "arquivo1.txt",0)
 
 
-def remover(chave, arquivo3):
-    m = 0
-    print(chave)
+def remover(chave, arquivo3,i):
+    
+    i=i+1
+    m=0
     arquivo3 = open(arquivo3, "r+")
-
+    delete=[-1]
     while m != chave:
 
         linha = arquivo3.readline()
         m = m+1
-        print(linha)
+        
+        delete.append(m)
+        
     lista=list(linha)
-    lista[0]="A"
+    lista[0]="\n*"+str(delete[i])
     arquivo3.writelines(lista)
 
-
+    print(delete)
 # Ler_Arquivo("arquivo1.txt")
 Ler_Op("op1.txt", "saida.txt")
