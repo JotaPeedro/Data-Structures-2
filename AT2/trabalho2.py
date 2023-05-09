@@ -11,6 +11,10 @@
 # Se o jogo não existir e tiver algum jogo já removido verificar no cabeçalho qual a posição para sobrescrever
 
 
+from ast import Delete
+from dataclasses import replace
+
+
 class Game:
     # construtor do objeto Game
     def __init__(self, nome=None, produtora=None, genero=None, plataforma=None,
@@ -104,7 +108,7 @@ def Ler_Arquivo(arquivo1):
 
 def Ler_Op(arquivo2, arquivo3):
     arquivo3 = open(arquivo3, "a")
-
+    j=0
     with open(arquivo2, 'r') as arq:
         # Lendo cada linha do arquivo como um registro
         games2 = []
@@ -164,26 +168,34 @@ def Ler_Op(arquivo2, arquivo3):
                     l = l+1
                     
                     if chavedelete in vetor:
-                        remover(l, "arquivo1.txt",0)
+                        
+                        remover(l, "arquivo1.txt",j)
+                        j=j+1
 
 
-def remover(chave, arquivo3,i):
+def remover(chave, arquivo3,j):
     
-    i=i+1
+    
     m=0
     arquivo3 = open(arquivo3, "r+")
+    linha=[]
     delete=[-1]
+    
     while m != chave:
-
-        linha = arquivo3.readline()
+        frase=arquivo3.readline()
+        linha.append(frase)
         m = m+1
-        
-        delete.append(m)
-        
-    lista=list(linha)
-    lista[0]="\n*"+str(delete[i])
-    arquivo3.writelines(lista)
+    delete.append(m-4)
+    inicio=frase[0:3]
+    sub="*"+str(delete[j-1])+"|"
 
     print(delete)
+    frasenova=frase.replace(inicio,sub,1)
+    print(frasenova)
+    
+    frase=frasenova
+    
+    arquivo3.writelines(frasenova)
+    
 # Ler_Arquivo("arquivo1.txt")
 Ler_Op("op1.txt", "saida.txt")
