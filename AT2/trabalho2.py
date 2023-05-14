@@ -50,7 +50,7 @@ TAM_TAMANHO = 7
 # Ler o arquivo e adiciona cada jogo em um objeto
 
 
-def Ler_Arquivo(arquivo1):
+def Ler_Arquivo(input1):
 
     print("Lendo registros")
     # Abrindo o arquivo de jogos para leitura
@@ -58,7 +58,7 @@ def Ler_Arquivo(arquivo1):
 
     i = 0
     vetor = [()]
-    with open(arquivo1, 'r') as arq:
+    with open(input1, 'r') as arq:
         # Lendo cada linha do arquivo como um registro
 
         cabecalho = arq.readline()
@@ -106,15 +106,23 @@ def Ler_Arquivo(arquivo1):
     return vetor
 
 
-def Ler_Op(arquivo2, arquivo3):
-    arquivo3 = open(arquivo3, "a")
-    j=0
-    with open(arquivo2, 'r') as arq:
+def Ler_Op(op1, temp):
+    temp = open(temp, "a")
+    j = 0
+    vetor3 = []
+    escrever = open("final.txt", "w")
+    saida = open("input1.txt", "r+")
+
+    for linha in saida:
+
+        vetor3.append(linha)
+
+    with open(op1, 'r') as arq:
         # Lendo cada linha do arquivo como um registro
         games2 = []
 
         for linha in arq:
-            vetor = Ler_Arquivo("arquivo1.txt")
+            vetor = Ler_Arquivo("input1.txt")
             existe = 0
             # Extraindo os campos do registro com base nas posições das barras
             campos = linha.strip().split(',')
@@ -156,7 +164,7 @@ def Ler_Op(arquivo2, arquivo3):
 
                 if existe == 0:
                     print("Inserindo no arquivo")
-                    arquivo3.write(f"{str(game2)}\n")
+                    temp.write(f"{str(game2)}\n")
             if op == "d":
                 l = 0
                 campos = linha.strip().split(',')
@@ -166,36 +174,75 @@ def Ler_Op(arquivo2, arquivo3):
 
                 for vetor in vetor:
                     l = l+1
-                    
+
                     if chavedelete in vetor:
-                        
-                        remover(l, "arquivo1.txt",j)
-                        j=j+1
+
+                        remover(l, "input1.txt", j, escrever, vetor3)
+
+                        j = j+1
 
 
-def remover(chave, arquivo3,j):
-    
-    
-    m=0
-    arquivo3 = open(arquivo3, "r+")
-    linha=[]
-    delete=[-1]
-    
+def remover(chave, temp, j, escrever, vetor):
+
+    k = 0
+    m = 0
+    saida = open(temp, "r+")
+    linha = []
+    delete = [-1]
+    vetor3 = vetor
     while m != chave:
-        frase=arquivo3.readline()
+        frase = saida.readline()
         linha.append(frase)
         m = m+1
-    delete.append(m-4)
-    inicio=frase[0:3]
-    sub="*"+str(delete[j-1])+"|"
 
+    if j == 0:
+        inicio = frase[0:3]
+        sub = "*-1+|"
+        frasenova = frase.replace(inicio, sub, 1)
+
+    delete.append(m-4)
+    inicio = frase[0:3]
+    sub = "*"+str(delete[j-1])+"|"
     print(delete)
-    frasenova=frase.replace(inicio,sub,1)
+    frasenova = frase.replace(inicio, sub, 1)
     print(frasenova)
-    
-    frase=frasenova
-    
-    arquivo3.writelines(frasenova)
-    
-# Ler_Arquivo("arquivo1.txt")
+
+    frase = frasenova
+
+    saida = open(temp, "r")
+    for linha in saida:
+        if k == m:
+            vetor3[k] = frasenova
+        k = k+1
+
+    h = 0
+
+    while h < k:
+        escrever.write(vetor3[h])
+        h = h+1
+
+
+def verificacao(input, op):
+
+    with open(input, 'r') as arq:
+        for linha in arq:
+            if "@""$""%""&""!" in linha:
+                print("Arquivo input invalido")
+                exit()
+            else:
+                with open(op, 'r') as arq2:
+                    for linha in arq2:
+                        if "@""$""%""&""!" in linha:
+                            print("Arquivo operacoes invalido")
+                            exit()
+                        else:
+                            print("Arquivos corretos")
+
+    arq.close()
+    arq2.close()
+
+
+verificacao("input1.txt", "op1.txt")
+# Ler_Arquivo("input1.txt")
+
 Ler_Op("op1.txt", "saida.txt")
