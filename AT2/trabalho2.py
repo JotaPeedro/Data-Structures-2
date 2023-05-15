@@ -13,6 +13,8 @@
 
 from ast import Delete
 from dataclasses import replace
+import string
+from traceback import print_tb
 
 
 class Game:
@@ -49,7 +51,6 @@ TAM_TAMANHO = 7
 
 # Ler o arquivo e adiciona cada jogo em um objeto
 
-
 def Ler_Arquivo(input1):
 
     print("Lendo registros")
@@ -85,7 +86,7 @@ def Ler_Arquivo(input1):
                         classificacao, preco, midia, tamanho)
             games.append(game)
 
-      #  print(cabecalho)
+            #print(cabecalho[6:8])
 
         # Cria a chave para cada jogo
         for game in games:
@@ -106,12 +107,22 @@ def Ler_Arquivo(input1):
     return vetor
 
 
+cabecalho=""
+ler=open("input1.txt","r")
+cabecalho = ler.readline()
+reg=cabecalho[13:15]
+print(cabecalho)
+print(cabecalho[13:15])
+
+
 def Ler_Op(op1, temp):
     temp = open(temp, "a")
     j = 0
     vetor3 = []
-    escrever = open("final.txt", "w")
+    
     saida = open("input1.txt", "r+")
+    t=""
+    var=0
 
     for linha in saida:
 
@@ -129,6 +140,24 @@ def Ler_Op(op1, temp):
             op = campos[0][:TAM_op].strip() if len(campos) > 0 else ""
 
             print(op)
+            if op == "d":
+                l = 0
+                campos = linha.strip().split(',')
+                op = campos[0].strip()
+                chavedelete = campos[1].strip()
+                print(chavedelete)
+
+                for vetor in vetor:
+                    l = l+1
+
+                    if chavedelete in vetor:
+
+                        t,var,cab = remover(l, "input1.txt", j)
+                        temp = open("temp.txt", "w")
+                        temp.writelines(cab)
+                        j = j+1
+                        vetor3[0]=cab
+                        vetor3[var-1]=t
 
             if op == "i":
                 nome = campos[1][:TAM_nome].strip() if len(campos) > 1 else ""
@@ -162,64 +191,87 @@ def Ler_Op(op1, temp):
                         existe = 1
                         print("Chave ja existe")
 
+
                 if existe == 0:
-                    print("Inserindo no arquivo")
-                    temp.write(f"{str(game2)}\n")
-            if op == "d":
-                l = 0
-                campos = linha.strip().split(',')
-                op = campos[0].strip()
-                chavedelete = campos[1].strip()
-                print(chavedelete)
-
-                for vetor in vetor:
-                    l = l+1
-
-                    if chavedelete in vetor:
-
-                        remover(l, "input1.txt", j, escrever, vetor3)
-
-                        j = j+1
+                    inser="\n"+str(game2)
+                    vetor3.append(inser)
+                    
+                    
+            
+                        
+    print("\n Final \n:",vetor3)
+    temp = open("temp.txt", "w")
+    w=0
+    while w<len(vetor3):
+        
+        temp.writelines(vetor3[w])
+        w=w+1
+    
+    return vetor3
 
 
-def remover(chave, temp, j, escrever, vetor):
+def criaFinal(arqFinal):
+    w=0
+    vetor1=Ler_Op("op1.txt", "temp.txt")
+    
+    temp = open(arqFinal, "w")
+    while w<len(vetor1):
+        if "*" in vetor1[w]:
+            del vetor1[w]
 
-    k = 0
+        w=w+1
+    w=0
+    while w<len(vetor1):
+        
+        temp.writelines(vetor1[w])
+        w=w+1
+    
+
+
+def inserir(game2,temp):
+    print("Inserindo no arquivo")
+    temp.write(f"{str(game2)}\n")
+
+    
+
+def remover(chave, temp, j):
+    
     m = 0
     saida = open(temp, "r+")
     linha = []
     delete = [-1]
-    vetor3 = vetor
+    
     while m != chave:
         frase = saida.readline()
         linha.append(frase)
         m = m+1
-
+   
     if j == 0:
         inicio = frase[0:3]
-        sub = "*-1+|"
+        sub = "*-1|"
+        newreg=j
         frasenova = frase.replace(inicio, sub, 1)
-
-    delete.append(m-4)
-    inicio = frase[0:3]
-    sub = "*"+str(delete[j-1])+"|"
-    print(delete)
-    frasenova = frase.replace(inicio, sub, 1)
-    print(frasenova)
-
+    if "-1" in cabecalho[13:15]:
+        inicio = frase[0:3]
+        
+        newreg=m
+        sub = "*"+str(newreg)+"|"
+        frasenova = frase.replace(inicio, sub, 1)
+    else:
+        delete.append(m-3)
+        inicio = frase[0:3]
+        sub = sub = "*"+str(newreg)+"|"
+        frasenova = frase.replace(inicio, sub, 1)
+        newreg=m
+    
+    cabecalhono=cabecalho.replace(reg,str(newreg))
     frase = frasenova
+    
+    print(cabecalhono)
+    
+    return frasenova, m,cabecalhono
 
-    saida = open(temp, "r")
-    for linha in saida:
-        if k == m:
-            vetor3[k] = frasenova
-        k = k+1
 
-    h = 0
-
-    while h < k:
-        escrever.write(vetor3[h])
-        h = h+1
 
 
 def verificacao(input, op):
@@ -242,7 +294,11 @@ def verificacao(input, op):
     arq2.close()
 
 
-verificacao("input1.txt", "op1.txt")
+
+
+
+#verificacao("input1.txt", "op1.txt")
 # Ler_Arquivo("input1.txt")
 
-Ler_Op("op1.txt", "saida.txt")
+
+criaFinal("FINAL.txt")
