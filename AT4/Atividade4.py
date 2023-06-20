@@ -21,8 +21,8 @@ class Music:
 # Define o tamanho dos parametros passado
 TAM_ano = 5
 TAM_duracao = 6
-TAM_titulo = 28
-TAM_artista = 25
+TAM_titulo = 20
+TAM_artista = 33
 TAM_genero = 15
 TAM_idioma = 10
 
@@ -90,33 +90,35 @@ def busca(musics, input2):
             if int(music.ano) == int(busca):
                 print(music)
 
-                inser = "\n"+str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
-                        music.genero)+"|"+str(music.idioma)
+                inser = str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
+                        music.genero)+"|"+str(music.idioma)+"\n"
                 retorno.append(inser)
+        
+            
     if tipobusca == "titulo\n":
         for music in musics:
             if str(music.titulo.lower()+"\n") == busca.lower():
                 print(music)
 
-                inser = "\n"+str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
-                        music.genero)+"|"+str(music.idioma)
+                inser =str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
+                        music.genero)+"|"+str(music.idioma)+"\n"
                 retorno.append(inser)
     if tipobusca == "artista\n":
         for music in musics:
             if str(music.artista.lower()+"\n") == busca.lower():
                 print(music)
 
-                inser = "\n"+str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
-                        music.genero)+"|"+str(music.idioma)
+                inser = str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
+                        music.genero)+"|"+str(music.idioma)+"\n"
                 retorno.append(inser)
 
     if tipobusca == "genero\n":
         for music in musics:
-            if str(music.genero.lower()+"\n") == busca.lower():
+            if  busca.lower()in str(music.genero.lower()+"\n"):
                 print(music)
 
-                inser = "\n"+str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
-                        music.genero)+"|"+str(music.idioma)
+                inser = str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
+                        music.genero)+"|"+str(music.idioma)+"\n"
                 retorno.append(inser)
     if tipobusca == "idioma\n":
 
@@ -125,9 +127,10 @@ def busca(musics, input2):
             if (str(music.idioma).lower()+"\n") == busca.lower():
                 print(music)
 
-                inser = "\n"+str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
-                        music.genero)+"|"+str(music.idioma)
+                inser = str(music.ano)+"|"+str(music.duracao)+"|"+str(music.titulo)+"|"+str(music.artista)+"|"+str(
+                        music.genero)+"|"+str(music.idioma)+"\n"
                 retorno.append(inser)
+    print(retorno)
 
     return (retorno)
 
@@ -135,10 +138,13 @@ def busca(musics, input2):
 def imprimirarq(vetorencontrado, input3):
     input3 = open(input3, "a")
     i = 0
+    if len(vetorencontrado)==0:
+        input3.writelines("Nenhuma musica encontrada")
+    else:
 
-    while i < len(vetorencontrado):
-        input3.writelines(vetorencontrado[i])
-        i = i+1
+        while i < len(vetorencontrado):
+            input3.writelines(vetorencontrado[i])
+            i = i+1
 
 
 def main(input1, input2, input3):
@@ -149,7 +155,7 @@ def main(input1, input2, input3):
 
 
 input1 = "input1.txt"
-input2 = "entrada06.txt"
-input3 = "saida6.txt"
+input2 = "entrada02.txt"
+input3 = "saida2.txt"
 
 main(input1, input2, input3)
